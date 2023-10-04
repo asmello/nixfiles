@@ -67,6 +67,10 @@
     # EDITOR = "hx";
   };
 
+  home.shellAliases = {
+    ls = "ls --color=auto";
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -145,5 +149,16 @@
       bind _ split-window -v -c "#{pane_current_path}"
       bind | split-window -h -c "#{pane_current_path}"
     '';
+  };
+
+  programs.dircolors = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
   };
 }
