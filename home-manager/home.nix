@@ -17,7 +17,7 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -26,7 +26,7 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -34,8 +34,10 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    pkgs.nil
-    pkgs.nixpkgs-fmt
+    nil
+    nixpkgs-fmt
+    rust-analyzer
+    openssh
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -89,6 +91,7 @@
         };
         size = 16.0;
       };
+      window.option_as_alt = "OnlyLeft";
     };
   };
 
@@ -96,12 +99,25 @@
     enable = true;
     defaultEditor = true;
     languages = {
-      language = [{
-        name = "nix";
-        formatter = {
-          command = "nixpkgs-fmt";
-        };
-      }];
+      language = [
+        {
+          name = "nix";
+          formatter = {
+            command = "nixpkgs-fmt";
+          };
+        }
+      ];
+
+      language-server.rust-analyzer.config.check = {
+        command = "clippy";
+      };
+    };
+    settings = {
+      editor = {
+        bufferline = "multiple";
+        color-modes = true;
+        lsp.display-inlay-hints = true;
+      };
     };
   };
 
@@ -160,5 +176,27 @@
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "André Sá de Mello";
+    userEmail = "asmello@pm.me";
+    signing = {
+      key = "/Users/asm/.ssh/id_ed25519_sk.pub";
+      signByDefault = true;
+    };
+    lfs.enable = true;
+    extraConfig = {
+      gpg.format = "ssh";
+      ssh.allowedSignersFile = "/Users/asm/.ssh/allowed_signers";
+      core.editor = "hx";
+      push.autoSetupRemote = true;
+    };
+  };
+
+  programs.ssh = {
+    enable = true;
+    compression = true;
   };
 }
