@@ -113,6 +113,7 @@
       };
     };
     settings = {
+      theme = "catppuccin_mocha";
       editor = {
         bufferline = "multiple";
         color-modes = true;
