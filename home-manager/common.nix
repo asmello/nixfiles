@@ -21,7 +21,7 @@
     nixpkgs-fmt
     rust-analyzer
     openssh
-    tree
+    ouch
 
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
@@ -56,7 +56,10 @@
   };
 
   home.shellAliases = {
-    ls = "ls --color=auto";
+    htop = "btm";
+    top = "btm";
+    ls = "eza";
+    cat = "bat";
   };
 
   # Let Home Manager install and manage itself.
@@ -169,4 +172,14 @@
       ui.pane_frames.hide_session_name = true;
     };
   };
+
+  programs.bottom.enable = true;
+
+  programs.eza = {
+    enable = true;
+    git = true;
+    icons = true;
+  };
+
+  programs.bat.enable = true;
 }
