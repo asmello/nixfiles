@@ -128,32 +128,6 @@
       #     } + /palettes/${flavour}.toml));
     };
 
-  programs.tmux = {
-    enable = true;
-    plugins = with pkgs.tmuxPlugins; [ sensible vim-tmux-navigator catppuccin ];
-    sensibleOnTop = false;
-    baseIndex = 1;
-    clock24 = true;
-    extraConfig = ''
-      # fix colours
-      set -sg terminal-overrides ",*:RGB"
-
-      # Shift arrow to switch windows
-      bind -n S-Left  previous-window
-      bind -n S-Right next-window
-
-      # set vi-mode
-      set-window-option -g mode-keys vi
-      # keybindings
-      bind-key -T copy-mode-vi v send-keys -X begin-selection
-      bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-      bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
-
-      bind _ split-window -v -c "#{pane_current_path}"
-      bind | split-window -h -c "#{pane_current_path}"
-    '';
-  };
-
   programs.dircolors = {
     enable = true;
     enableZshIntegration = true;
@@ -185,5 +159,10 @@
   programs.ssh = {
     enable = true;
     compression = true;
+  };
+
+  programs.zellij = {
+    enable = true;
+    enableZshIntegration = true;
   };
 }
