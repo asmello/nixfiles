@@ -115,17 +115,17 @@
     {
       enable = true;
       enableZshIntegration = true;
-      # settings = {
-      #   format = "$all";
-      #   palette = "catppuccin_${flavour}";
-      # } // builtins.fromTOML (builtins.readFile
-      #   (pkgs.fetchFromGitHub
-      #     {
-      #       owner = "catppuccin";
-      #       repo = "starship";
-      #       rev = "5629d23";
-      #       sha256 = "sha256-nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
-      #     } + /palettes/${flavour}.toml));
+      settings = {
+        format = "$all";
+        palette = "catppuccin_${flavour}";
+      } // builtins.fromTOML (builtins.readFile
+        (pkgs.fetchFromGitHub
+          {
+            owner = "catppuccin";
+            repo = "starship";
+            rev = "5629d23";
+            sha256 = "sha256-nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
+          } + /palettes/${flavour}.toml));
     };
 
   programs.dircolors = {
@@ -164,5 +164,9 @@
   programs.zellij = {
     enable = true;
     enableZshIntegration = true;
+    settings = {
+      theme = "catppuccin-mocha";
+      ui.pane_frames.hide_session_name = true;
+    };
   };
 }
