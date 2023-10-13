@@ -176,7 +176,7 @@
     lfs.enable = true;
     extraConfig = {
       gpg.format = "ssh";
-      ssh.allowedSignersFile = "${homeDirectory}/.ssh/allowed_signers";
+      gpg.ssh.allowedSignersFile = "${homeDirectory}/.ssh/allowed_signers";
       core.editor = "hx";
       push.autoSetupRemote = true;
     };
