@@ -22,6 +22,7 @@
     rust-analyzer
     openssh
     ouch
+    gh
 
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
@@ -81,7 +82,17 @@
         size = 16.0;
       };
       window.option_as_alt = "OnlyLeft";
-    };
+    } // builtins.fromTOML (
+      builtins.readFile (
+        pkgs.fetchFromGitHub
+          {
+            owner = "catppuccin";
+            repo = "alacritty";
+            rev = "6de97d9";
+            sha256 = "sha256-jtdLQQjuzLd4CwnmwOVwxZdQuTje+HC1CA8ftsYfXpM=";
+          } + /catppuccin-mocha.toml
+      )
+    );
   };
 
   programs.helix = {
