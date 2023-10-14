@@ -18,6 +18,7 @@
       };
     in
     {
-      homeConfigurations."asm@mac" = mkHomeConfig ./macos.nix "aarch64-darwin";
+      homeConfigurations."mac" = mkHomeConfig ./macos.nix "aarch64-darwin";
+      homeConfigurations."linux" = mkHomeConfig ./linux.nix "x86_64-linux";
     };
 }

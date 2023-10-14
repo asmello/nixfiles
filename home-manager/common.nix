@@ -27,6 +27,8 @@
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 
+  fonts.fontconfig.enable = true;
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -70,29 +72,6 @@
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
-  };
-
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      font = {
-        normal = {
-          family = "FiraCode Nerd Font";
-        };
-        size = 16.0;
-      };
-      window.option_as_alt = "OnlyLeft";
-    } // builtins.fromTOML (
-      builtins.readFile (
-        pkgs.fetchFromGitHub
-          {
-            owner = "catppuccin";
-            repo = "alacritty";
-            rev = "6de97d9";
-            sha256 = "sha256-jtdLQQjuzLd4CwnmwOVwxZdQuTje+HC1CA8ftsYfXpM=";
-          } + /catppuccin-mocha.toml
-      )
-    );
   };
 
   programs.helix = {
