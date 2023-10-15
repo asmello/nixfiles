@@ -23,6 +23,7 @@
     openssh
     ouch
     gh
+    fd
 
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
