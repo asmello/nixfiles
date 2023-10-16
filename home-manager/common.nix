@@ -24,6 +24,7 @@
     ouch
     gh
     fd
+    ltex-ls
 
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
@@ -86,15 +87,25 @@
             command = "nixpkgs-fmt";
           };
         }
+
+        {
+          name = "markdown";
+          language-server.command = "ltex-ls";
+          file-types = [ "md" "txt" ];
+          scope = "text.markdown";
+          roots = [ ];
+        }
       ];
 
-      language-server.rust-analyzer.config.check = {
-        command = "clippy";
+      language-server = {
+        rust-analyzer.config.check.command = "clippy";
       };
+
     };
     settings = {
       theme = "catppuccin_mocha";
       editor = {
+        soft-wrap.enable = true;
         bufferline = "multiple";
         color-modes = true;
         lsp.display-inlay-hints = true;
