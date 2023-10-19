@@ -17,6 +17,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    cargo
     nil
     nixpkgs-fmt
     rust-analyzer
@@ -25,6 +26,9 @@
     gh
     fd
     ltex-ls
+    zola
+
+    nodePackages.vscode-css-languageserver-bin
 
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
@@ -65,6 +69,7 @@
     top = "btm";
     ls = "eza";
     cat = "bat";
+    tree = "ls -T";
   };
 
   # Let Home Manager install and manage itself.
@@ -80,6 +85,11 @@
     enable = true;
     defaultEditor = true;
     languages = {
+      language-server = {
+        # currently does not do anything
+        rust-analyzer.config.check.command = "clippy";
+      };
+
       language = [
         {
           name = "nix";
@@ -95,11 +105,23 @@
           scope = "text.markdown";
           roots = [ ];
         }
-      ];
 
-      language-server = {
-        rust-analyzer.config.check.command = "clippy";
-      };
+        {
+          name = "css";
+          language-server = {
+            command = "css-languageserver";
+            args = [ "--stdio" ];
+          };
+        }
+
+        {
+          name = "scss";
+          language-server = {
+            command = "css-languageserver";
+            args = [ "--stdio" ];
+          };
+        }
+      ];
 
     };
     settings = {
@@ -184,4 +206,6 @@
   };
 
   programs.bat.enable = true;
+
+  programs.ripgrep.enable = true;
 }
