@@ -18,8 +18,11 @@
   # environment.
   home.packages = with pkgs; [
     cargo
+    clippy
     nil
     nixpkgs-fmt
+    rustc
+    rustfmt
     rust-analyzer
     openssh
     ouch
@@ -27,6 +30,9 @@
     fd
     ltex-ls
     zola
+    http-prompt
+    sqlx-cli
+    sqlite
 
     nodePackages.vscode-css-languageserver-bin
 
@@ -61,7 +67,7 @@
   #
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
-    # EDITOR = "hx";
+    RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
   };
 
   home.shellAliases = {
@@ -79,18 +85,29 @@
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
+    initExtra = ''
+      source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+      bindkey '^[[Z' autosuggest-accept
+    '';
   };
 
   programs.helix = {
     enable = true;
     defaultEditor = true;
     languages = {
-      language-server = {
-        # currently does not do anything
-        rust-analyzer.config.check.command = "clippy";
-      };
+      # language-server = {
+      #   rust-analyzer.config.check.command = "clippy";
+      # };
 
       language = [
+        {
+          name = "rust";
+          config = {
+            check.command = "clippy";
+            imports.granularity.group = "crate";
+          };
+        }
+
         {
           name = "nix";
           formatter = {
