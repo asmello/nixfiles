@@ -17,12 +17,8 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    cargo
-    clippy
     nil
     nixpkgs-fmt
-    rustc
-    rustfmt
     rust-analyzer
     openssh
     ouch
@@ -37,6 +33,11 @@
     nodePackages.vscode-css-languageserver-bin
 
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
+
+    (python3.withPackages (pyPkgs: with pyPkgs; [
+      python-lsp-server
+      python-lsp-ruff
+    ]))
   ];
 
   fonts.fontconfig.enable = true;
