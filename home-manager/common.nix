@@ -95,19 +95,19 @@
     enable = true;
     defaultEditor = true;
     languages = {
-      # language-server = {
-      #   rust-analyzer.config.check.command = "clippy";
-      # };
+      language-server = {
+        rust-analyzer = {
+          config.check.command = "clippy";
+          imports.granularity.group = "crate";
+        };
+        css = {
+          command = "css-languageserver";
+          args = [ "--stdio" ];
+        };
+        latex-lsp.command = "ltex-ls";
+      };
 
       language = [
-        {
-          name = "rust";
-          config = {
-            check.command = "clippy";
-            imports.granularity.group = "crate";
-          };
-        }
-
         {
           name = "nix";
           formatter = {
@@ -117,7 +117,7 @@
 
         {
           name = "markdown";
-          language-server.command = "ltex-ls";
+          language-servers = [ "latex-lsp" ];
           file-types = [ "md" "txt" ];
           scope = "text.markdown";
           roots = [ ];
@@ -125,18 +125,12 @@
 
         {
           name = "css";
-          language-server = {
-            command = "css-languageserver";
-            args = [ "--stdio" ];
-          };
+          language-servers = [ "css" ];
         }
 
         {
           name = "scss";
-          language-server = {
-            command = "css-languageserver";
-            args = [ "--stdio" ];
-          };
+          language-servers = [ "css" ];
         }
       ];
 
