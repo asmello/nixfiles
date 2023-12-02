@@ -78,6 +78,10 @@
     ls = "eza";
     cat = "bat";
     tree = "ls -T";
+    ga = "git add -A";
+    gc = "git commit";
+    gp = "git push";
+    gco = "git checkout";
   };
 
   # Let Home Manager install and manage itself.
