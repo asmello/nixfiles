@@ -29,6 +29,7 @@
     http-prompt
     sqlx-cli
     sqlite
+    taplo
 
     nodePackages.vscode-css-languageserver-bin
 
