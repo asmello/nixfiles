@@ -17,6 +17,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    cargo
     nil
     nixpkgs-fmt
     rust-analyzer
@@ -147,7 +148,10 @@
         soft-wrap.enable = true;
         bufferline = "multiple";
         color-modes = true;
-        lsp.display-inlay-hints = true;
+        lsp = {
+          display-inlay-hints = true;
+          display-messages = true;
+        };
       };
     };
   };
