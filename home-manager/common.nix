@@ -1,4 +1,4 @@
-{ config, pkgs, username, homeDirectory, ... }:
+{ pkgs, username, homeDirectory, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -19,7 +19,7 @@
   home.packages = with pkgs; [
     cargo
     nil
-    nixpkgs-fmt
+    nixfmt
     rust-analyzer
     openssh
     ouch
@@ -33,13 +33,13 @@
     taplo
 
     nodePackages.vscode-css-languageserver-bin
+    nodePackages.typescript-language-server
 
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
-    (python3.withPackages (pyPkgs: with pyPkgs; [
-      python-lsp-server
-      python-lsp-ruff
-    ]))
+    (python3.withPackages
+      (pyPkgs: with pyPkgs; [ python-lsp-server python-lsp-ruff ]))
+
   ];
 
   fonts.fontconfig.enable = true;
@@ -83,6 +83,8 @@
     gc = "git commit";
     gp = "git push";
     gco = "git checkout";
+    gs = "git status"; # conflicts with ghostscript `gs`
+    cd = "z";
   };
 
   # Let Home Manager install and manage itself.
@@ -117,9 +119,8 @@
       language = [
         {
           name = "nix";
-          formatter = {
-            command = "nixpkgs-fmt";
-          };
+          formatter = { command = "nixfmt"; };
+          auto-format = true;
         }
 
         {
@@ -156,25 +157,20 @@
     };
   };
 
-  programs.starship =
-    let
-      flavour = "mocha";
-    in
-    {
-      enable = true;
-      enableZshIntegration = true;
-      settings = {
-        format = "$all";
-        palette = "catppuccin_${flavour}";
-      } // builtins.fromTOML (builtins.readFile
-        (pkgs.fetchFromGitHub
-          {
-            owner = "catppuccin";
-            repo = "starship";
-            rev = "5629d23";
-            sha256 = "sha256-nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
-          } + /palettes/${flavour}.toml));
-    };
+  programs.starship = let flavour = "mocha";
+  in {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      format = "$all";
+      palette = "catppuccin_${flavour}";
+    } // builtins.fromTOML (builtins.readFile (pkgs.fetchFromGitHub {
+      owner = "catppuccin";
+      repo = "starship";
+      rev = "5629d23";
+      sha256 = "sha256-nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
+    } + /palettes/${flavour}.toml));
+  };
 
   programs.dircolors = {
     enable = true;
@@ -229,4 +225,9 @@
   programs.bat.enable = true;
 
   programs.ripgrep.enable = true;
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }
