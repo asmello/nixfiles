@@ -34,6 +34,7 @@
 
     nodePackages.vscode-css-languageserver-bin
     nodePackages.typescript-language-server
+    nodePackages.prettier
 
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
@@ -114,6 +115,31 @@
           args = [ "--stdio" ];
         };
         latex-lsp.command = "ltex-ls";
+        typescript-language-server.config.documentFormatting = false;
+        eslint = {
+          command = "vscode-eslint-language-server";
+          args = [ "--stdio" ];
+          config = {
+            validate = "on";
+            experimental = { useFlatConfig = false; };
+            rulesCustomizations = [ ];
+            run = "onType";
+            problems = { shortenToSingleLine = false; };
+            nodePath = "";
+            codeAction = {
+              disableRuleComment = {
+                enable = true;
+                location = "separateLine";
+              };
+              showDocumentation.enable = true;
+            };
+            codeActionOnSave = {
+              enable = true;
+              mode = "fixAll";
+            };
+            workingDirectory.mode = "location";
+          };
+        };
       };
 
       language = [
@@ -139,6 +165,22 @@
         {
           name = "scss";
           language-servers = [ "css" ];
+        }
+
+        {
+          name = "typescript";
+          auto-format = true;
+          language-servers = [
+            {
+              except-features = [ "format" ];
+              name = "typescript-language-server";
+            }
+            "eslint"
+          ];
+          formatter = {
+            command = "prettier";
+            args = [ "--parser" "typescript" ];
+          };
         }
       ];
 
