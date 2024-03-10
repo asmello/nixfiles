@@ -12,7 +12,5 @@ in lib.attrsets.recursiveUpdate rendered {
       . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
     fi
     # End Nix
-    source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-    bindkey '^[[Z' autosuggest-accept
-  '';
+  '' + rendered.programs.zsh.initExtra;
 }
