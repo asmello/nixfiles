@@ -17,10 +17,8 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    cargo
     nil
     nixfmt
-    rust-analyzer
     openssh
     ouch
     gh
@@ -30,7 +28,6 @@
     http-prompt
     sqlx-cli
     sqlite
-    taplo
 
     nodePackages.vscode-css-languageserver-bin
     nodePackages.typescript-language-server
