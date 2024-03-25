@@ -244,7 +244,7 @@
   programs.git = {
     enable = true;
     userName = "André Sá de Mello";
-    userEmail = "asmello@pm.me";
+    userEmail = "git.frugally715@simplelogin.com";
     signing = {
       key = "${homeDirectory}/.ssh/id_ed25519_sk.pub";
       signByDefault = true;
