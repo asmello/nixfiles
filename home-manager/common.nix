@@ -32,6 +32,7 @@
     nodePackages.vscode-css-languageserver-bin
     nodePackages.typescript-language-server
     nodePackages.prettier
+    nodePackages.svelte-language-server
 
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
@@ -178,6 +179,12 @@
             command = "prettier";
             args = [ "--parser" "typescript" ];
           };
+        }
+
+        {
+          name = "svelte";
+          auto-format = true;
+          formatter = { command = "prettier"; };
         }
       ];
 
