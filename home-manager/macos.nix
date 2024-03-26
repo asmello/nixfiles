@@ -13,4 +13,16 @@ in lib.attrsets.recursiveUpdate rendered {
     fi
     # End Nix
   '' + rendered.programs.zsh.initExtra);
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      import = [ "~/.config/alacritty/catppuccin-mocha.toml" ];
+      font = {
+        normal.family = "FiraCode Nerd Font";
+        size = 14.0;
+      };
+      window.option_as_alt = "OnlyLeft";
+    };
+  };
 }
