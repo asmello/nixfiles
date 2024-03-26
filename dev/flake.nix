@@ -15,11 +15,29 @@
       in with pkgs; {
         devShells.default = mkShell {
           packages = with pkgs; [
+            # Nix
+            nil
+            nixfmt
+
+            # Rust
             (rust-bin.stable.latest.default.override {
               extensions = [ "rust-src" ];
             })
             rust-analyzer
+
+            # TOML
             taplo
+
+            # Python
+            (python3.withPackages
+              (pyPkgs: with pyPkgs; [ python-lsp-server python-lsp-ruff ]))
+
+            # Typescript / Frontend
+            nodePackages.vscode-css-languageserver-bin
+            nodePackages.typescript-language-server
+            nodePackages.prettier
+            nodePackages.svelte-language-server
+
           ];
         };
       });

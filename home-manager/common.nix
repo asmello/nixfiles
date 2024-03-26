@@ -17,8 +17,6 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    nil
-    nixfmt
     openssh
     ouch
     gh
@@ -29,16 +27,7 @@
     sqlx-cli
     sqlite
 
-    nodePackages.vscode-css-languageserver-bin
-    nodePackages.typescript-language-server
-    nodePackages.prettier
-    nodePackages.svelte-language-server
-
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
-
-    (python3.withPackages
-      (pyPkgs: with pyPkgs; [ python-lsp-server python-lsp-ruff ]))
-
   ];
 
   fonts.fontconfig.enable = true;
@@ -49,10 +38,6 @@
       source = alacritty/catppuccin-mocha.toml;
       target = ".config/alacritty/catppuccin-mocha.toml";
     };
-  };
-
-  home.sessionVariables = {
-    RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
   };
 
   home.shellAliases = {
